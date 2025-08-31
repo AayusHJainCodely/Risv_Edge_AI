@@ -39,6 +39,9 @@ To build a robust model, the dataset was carefully prepared using Python scripts
   * **Image Resizing:** Images were resized to a uniform, smaller dimension (e.g., 96x96) suitable for the embedded target.
   * **Normalization:** Pixel values were scaled for better model convergence.
   * **Data Augmentation:** Techniques like random rotation, flipping, and zooming were applied to expand the dataset and prevent overfitting.
+    ![](histogram_preprocessed.png)
+
+
 
 ### 2\. Model Training & Quantization (TensorFlow)
 
@@ -49,6 +52,8 @@ To build a robust model, the dataset was carefully prepared using Python scripts
 
   * **Model to C Array:** The `.tflite` model was converted into C header and source files (`model_params.h`, `model_params.c`) containing the quantized weights and biases as integer arrays.
   * **Lightweight Inference Engine:** Simple C functions were written to perform the core operations of a neural network (like dense layer computation and activation functions) using only integer arithmetic on the RISC-V core. This firmware is designed to be compiled with a bare-metal RISC-V toolchain.
+
+![](retina_image.png)
 
 -----
 
@@ -123,15 +128,15 @@ This project provides practical experience in the complete end-to-end workflow o
 
   * **Model Optimization:** Mastered post-training quantization to fit large models onto tiny devices.
   * **Bare-Metal Programming:** Understood how to implement ML inference from scratch in C for a RISC-V target without an OS.
-  * **Hardware-Aware ML:** Learned to make design choices (e.g., input size, model architecture) based on hardware constraints.
-  * **RISC-V for AI:** Gained hands-on experience in utilizing the RISC-V architecture for intelligent edge computing tasks.
+![](result.png)
+
 
 -----
 
 ## 📜 License
 
 This project is licensed under the **MIT License**. See the `LICENSE` file for details.
-✨ Acknowledgments
+## ✨ Acknowledgments
 Thanks to VLSI System Design (VSD) for providing the course resources and project guidance.
 Thanks to SiFive For the FE310-G002 SoC specifications.
 Thanks to the organizers of the APTOS 2019 Blindness Detection challenge for providing the high-quality dataset.
