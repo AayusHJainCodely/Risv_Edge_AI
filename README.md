@@ -104,23 +104,51 @@ To build a robust model, the dataset was carefully prepared using Python scripts
 
       * Open and run the `Diabetic_Retinopathy_Training.ipynb` notebook to train the model, quantize it, and generate the C-arrays.
 
-### Part B: Deploying to RISC-V Board
+Deploying to RISC-V Board
 
-1.  **Setup RISC-V Toolchain:**
+### 1. Open Freedom Studio and Import the Project
 
-      * Install the RISC-V GNU Toolchain and ensure it's in your system's PATH.
+* Launch **Freedom Studio**.
+* Go to **File > Import... > Existing Projects into Workspace**.
+* Select the project directory and import it.
 
-2.  **Compile the Firmware:**
+### 2. Clean and Build the Project
 
-      * Navigate to the firmware directory: `cd ../riscv_firmware`
-      * Run the Makefile to build the project: `make`
+* Navigate to:
 
-3.  **Flash to Board:**
+  * **Project > Clean...** — select the project and confirm.
+  * **Project > Build Project** — this will compile the project and generate the `main.elf` file.
 
-      * Connect the VSDSquadron PRO board. Use `zadig-2.9.exe` if on Windows to set up drivers.
-      * Use your preferred flashing tool (like `openocd`) to upload the compiled `.elf` file to the board.
+### 3. Run in Simulation (Optional)
 
------
+* Configure a debug launch for simulation:
+
+  * Go to **Run > Debug Configurations...**.
+  * Create or modify a **SiFive GDB OpenOCD Debugging** configuration.
+  * Ensure the **Executable** path points to the correct `main.elf` file.
+* Start the simulation.
+* Observe output in the **Freedom Studio Console**.
+
+### 4. Flash to VSDSquadron PRO Board
+
+* **Connect the board** via USB.
+
+* If on **Windows**, use [`zadig-2.9.exe`](https://zadig.akeo.ie/) to install the correct USB drivers:
+
+  * Run Zadig.
+  * Select the connected USB device (usually shows as "USB Serial" or similar).
+  * Choose `WinUSB` as the driver and click **Install Driver**.
+
+* Use your preferred flashing tool, such as **OpenOCD**, to flash the `main.elf` file:
+
+  ```bash
+  openocd -f interface/ftdi/vsdsquadron.cfg -f target/sifive.cfg -c "program path/to/main.elf verify reset exit"
+  ```
+
+> 💡 Replace `path/to/main.elf` with the actual path to your compiled `.elf` file.
+
+---
+
 
 ## ✨ Key Learnings
 
@@ -137,7 +165,7 @@ This project provides practical experience in the complete end-to-end workflow o
 
 This project is licensed under the **MIT License**. See the `LICENSE` file for details.
 ## ✨ Acknowledgments
-Thanks to VLSI System Design (VSD) for providing the course resources and project guidance.
-Thanks to SiFive For the FE310-G002 SoC specifications.
-Thanks to the organizers of the APTOS 2019 Blindness Detection challenge for providing the high-quality dataset.
-Credit to the creators of the VGG-16 architecture and the Keras/TensorFlow teams for their powerful deep learning frameworks.
+* Thanks to VLSI System Design (VSD) for providing the course resources and project guidance.
+* Thanks to SiFive For the FE310-G002 SoC specifications.
+* Thanks to the organizers of the APTOS 2019 Blindness Detection challenge for providing the high-quality dataset.
+* Credit to the creators of the VGG-16 architecture and the Keras/TensorFlow teams for their powerful deep learning frameworks.
